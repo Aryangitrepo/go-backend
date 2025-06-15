@@ -10,6 +10,7 @@ import (
 
 // Login handles user authentication
 func Login(service models.UserFunc) gin.HandlerFunc {
+
 	return func(c *gin.Context) {
 		var credentials models.LoginJson
 
@@ -36,7 +37,6 @@ func Login(service models.UserFunc) gin.HandlerFunc {
 			})
 			return
 		}
-
 		c.JSON(http.StatusOK, gin.H{
 			"message":  "Login successful",
 			"token":    token,

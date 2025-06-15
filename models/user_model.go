@@ -17,20 +17,19 @@ type User struct {
 	Pic      string
 }
 type UserFunc interface {
-	AddUser(*User) error
-	FindUser(*LoginJson) (*User, error)
+	AddUser(user *User) error
+	FindUser(credentials *LoginJson) (*User, error)
 }
-type Userfunc struct{}
 
 // User operations
-func (u *Userfunc) AddUser(user *User) error {
+func (u *User) AddUser(user *User) error {
 	if err := db.Create(user).Error; err != nil {
 		return fmt.Errorf("creating user: %w", err)
 	}
 	return nil
 }
 
-func (u *Userfunc) FindUser(credentials *LoginJson) (*User, error) {
+func (u *User) FindUser(credentials *LoginJson) (*User, error) {
 	var user User
 	err := db.Where("email = ? AND password = ?", credentials.Email, credentials.Password).
 		First(&user).
