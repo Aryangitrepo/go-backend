@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*func setupServer() *gin.Engine {
+func setupServer() *gin.Engine {
 	// Gin Mode
 	gin.SetMode(gin.ReleaseMode)
 
@@ -18,44 +18,32 @@ import (
 	// Setup the API Routes
 
 	setupUserRoutes(engine)
-	auth := engine.Group("/auth")
-	auth.Use(middleware.Auth)
-	{
-		auth.GET("/hello", routes.Hello)
-		auth.POST("/registerp", routes.RegisterPatient)
-		auth.GET("/getallpatients", routes.GetAllPatients)
-		auth.GET("/patient", routes.GetPatientByID)
-		auth.PATCH("/updatep", routes.UpdatePatient)
-		auth.DELETE("/deletep", routes.DeletePatient)
-	}s
 
 	// Return engine
 	return engine
-}*/
+}
 
 func setupUserRoutes(ge *gin.Engine) {
 	nA := ge.Group("/")
 	{
-		services := models.Userfunc{}
+		services := models.User{}
 		nA.POST("/signup", routes.SignUp(&services))
 		nA.POST("/login", routes.Login(&services))
+	}
+
+	auth := ge.Group("/auth")
+	auth.Use(middleware.Auth)
+	{
+		service := models.PatientData{}
+		auth.GET("/hello", routes.Hello)
+		auth.POST("/registerp", routes.RegisterPatient(&service))
+		auth.GET("/getallpatients", routes.GetAllPatients(&service))
+		auth.GET("/patient", routes.GetPatientByID(&service))
+		auth.PATCH("/updatep", routes.UpdatePatient(&service))
+		auth.DELETE("/deletep", routes.DeletePatient(&service))
 	}
 }
 
 func main() {
-	ge := gin.Default()
-	models.Config()
-	setupUserRoutes(ge)
-	auth := ge.Group("/auth")
-	auth.Use(middleware.Auth)
-	{
-		auth.GET("/hello", routes.Hello)
-		auth.POST("/registerp", routes.RegisterPatient)
-		auth.GET("/getallpatients", routes.GetAllPatients)
-		auth.GET("/patient", routes.GetPatientByID)
-		auth.PATCH("/updatep", routes.UpdatePatient)
-		auth.DELETE("/deletep", routes.DeletePatient)
-	}
-	ge.Run(":8080")
-	//setupserver().Run(":8080")
+	setupServer().Run(":8080")
 }

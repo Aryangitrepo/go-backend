@@ -16,9 +16,16 @@ type PatientData struct {
 	Condition string `gorm:"not null" json:"condition"`
 	User      User   `gorm:"foreignKey:UserID;references:ID" json:"-"`
 }
+type PatientInterface interface {
+	RegisterPatient(*PatientData) error
+	GetAllPatients() ([]PatientData, error)
+	GetPatientByID(uint) (PatientData, error)
+	UpdatePatient(*PatientData) error
+	DeletePatient(uint) error
+}
 
 // Patient operations
-func RegisterPatient(patient *PatientData) error {
+func (s *PatientData) RegisterPatient(patient *PatientData) error {
 	if err := db.Create(patient).Error; err != nil {
 		return fmt.Errorf("registering patient: %w", err)
 	}
@@ -26,7 +33,7 @@ func RegisterPatient(patient *PatientData) error {
 }
 
 // returns all patients
-func GetAllPatients() ([]PatientData, error) {
+func (s *PatientData) GetAllPatients() ([]PatientData, error) {
 	var patients []PatientData
 	if err := db.Preload("User").Find(&patients).Error; err != nil {
 		return nil, fmt.Errorf("fetching patients: %w", err)
@@ -35,7 +42,7 @@ func GetAllPatients() ([]PatientData, error) {
 }
 
 // returns patients using ID
-func GetPatientByID(pid uint) (PatientData, error) {
+func (s *PatientData) GetPatientByID(pid uint) (PatientData, error) {
 	var patient PatientData
 	err := db.Preload("User").Where("id = ?", pid).First(&patient).Error
 	if err != nil {
@@ -48,7 +55,7 @@ func GetPatientByID(pid uint) (PatientData, error) {
 }
 
 // returns error if didnt update
-func UpdatePatient(patient *PatientData) error {
+func (s *PatientData) UpdatePatient(patient *PatientData) error {
 	result := db.Model(patient).Updates(patient)
 	if result.Error != nil {
 		return fmt.Errorf("updating patient: %w", result.Error)
@@ -60,7 +67,7 @@ func UpdatePatient(patient *PatientData) error {
 }
 
 // returns error if didnt delete
-func DeletePatient(id uint) error {
+func (s *PatientData) DeletePatient(id uint) error {
 	result := db.Where("id = ?", id).Delete(&PatientData{})
 	if result.Error != nil {
 		return fmt.Errorf("deleting patient: %w", result.Error)
