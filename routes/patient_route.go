@@ -21,7 +21,7 @@ func RegisterPatient(service models.PatientInterface) gin.HandlerFunc {
 
 		if err := c.ShouldBindJSON(&pd); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "invalid patient data",
+				"error": "invalid patient data" + err.Error(),
 			})
 			return
 		}

@@ -19,7 +19,9 @@ func loadEnv() {
 func CreateToken(username string) (string, error) {
 	loadEnv()
 	secretKey := os.Getenv("SECRET_KEY")
-
+	if secretKey == "" {
+		secretKey = "hello"
+	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": username,
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),

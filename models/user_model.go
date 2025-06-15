@@ -18,7 +18,7 @@ type User struct {
 }
 type UserFunc interface {
 	AddUser(user *User) error
-	FindUser(credentials *LoginJson) (*User, error)
+	FindUser(credentials LoginJson) (*User, error)
 }
 
 // User operations
@@ -29,7 +29,7 @@ func (u *User) AddUser(user *User) error {
 	return nil
 }
 
-func (u *User) FindUser(credentials *LoginJson) (*User, error) {
+func (u *User) FindUser(credentials LoginJson) (*User, error) {
 	var user User
 	err := db.Where("email = ? AND password = ?", credentials.Email, credentials.Password).
 		First(&user).

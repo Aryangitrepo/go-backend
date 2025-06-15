@@ -56,7 +56,7 @@ func (s *PatientData) GetPatientByID(pid uint) (PatientData, error) {
 
 // returns error if didnt update
 func (s *PatientData) UpdatePatient(patient *PatientData) error {
-	result := db.Model(patient).Updates(patient)
+	result := db.Where("ID=?", patient.ID).Updates(patient)
 	if result.Error != nil {
 		return fmt.Errorf("updating patient: %w", result.Error)
 	}

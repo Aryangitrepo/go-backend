@@ -22,7 +22,7 @@ func Login(service models.UserFunc) gin.HandlerFunc {
 			return
 		}
 
-		user, err := service.FindUser(&credentials)
+		user, err := service.FindUser(credentials)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"error": "invalid credentials",

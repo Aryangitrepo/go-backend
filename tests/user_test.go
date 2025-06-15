@@ -91,7 +91,7 @@ func TestSignUproute(t *testing.T) {
 
 }
 
-func (lt *loginTest) FindUser(credentials *models.LoginJson) (*models.User, error) {
+func (lt *loginTest) FindUser(credentials models.LoginJson) (*models.User, error) {
 	user := models.User{
 		Name: "hello",
 	}
