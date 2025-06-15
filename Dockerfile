@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY .env ./
 
 # Copy your compiled Go binary (named 'main') into the container
-COPY app ./
+COPY main ./
 
 # Run the Go binary
 CMD ["./main"]
