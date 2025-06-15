@@ -51,10 +51,11 @@ func Config() error {
 	}
 
 	// Migrate all models
-	err = db.AutoMigrate(&User{}, &PatientData{}, &DoctorAppointment{})
-	if err != nil {
-		return fmt.Errorf("migrating database: %w", err)
-	}
+	//migrate when you change the attributes or tables in db
+	// err = db.AutoMigrate(&User{}, &PatientData{}, &DoctorAppointment{})
+	// if err != nil {
+	// 	return fmt.Errorf("migrating database: %w", err)
+	// }
 
 	log.Println("Database connection established and models migrated")
 	return nil

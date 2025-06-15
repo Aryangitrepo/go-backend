@@ -4,14 +4,17 @@ import (
 	"intern/middleware"
 	"intern/models"
 	"intern/routes"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
 
 func setupServer() *gin.Engine {
 	// Gin Mode
-	gin.SetMode(gin.ReleaseMode)
-
+	gin.SetMode(gin.DebugMode)
+	if err := models.Config(); err != nil {
+		log.Fatal(err)
+	}
 	// Creates the Gin Engine
 	engine := gin.New()
 
