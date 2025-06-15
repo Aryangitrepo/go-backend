@@ -20,16 +20,14 @@ func RegisterPatient(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&pd); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "invalid patient data",
-			"details": err.Error(),
+			"error": "invalid patient data",
 		})
 		return
 	}
 
 	if err := models.RegisterPatient(&pd); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   "failed to register patient",
-			"details": err.Error(),
+			"error": "failed to register patient or invalid Doctor id",
 		})
 		return
 	}
