@@ -10,10 +10,10 @@ import (
 type User struct {
 	gorm.Model
 	ID       int `gorm:"primaryKey;autoIncrement:true"`
-	Name     string
-	Role     string
-	Email    string `gorm:"unique;not null"`
-	Password string
+	Name     string `json:"name"`
+	Role     string `json:"role"`
+	Email    string `gorm:"unique;not null " json:"email"`
+	Password string `json:"password"`
 	Pic      string
 }
 type UserFunc interface {
