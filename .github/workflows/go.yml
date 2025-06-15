@@ -31,8 +31,11 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Docker image
-      run: docker build -t aryan0011/go-backend:latest .
+    - name: Build Docker image with build args
+      run: docker build \
+             --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
+             --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
+             -t aryan0011/go-backend:latest .
 
     - name: Push Docker image
-      run: docker push aryan0011/go-backend:latest:latest
+      run: docker push aryan0011/go-backend:latest
