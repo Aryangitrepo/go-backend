@@ -35,9 +35,11 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and push Docker image
-      run: | 
-            docker buildx build 
-            --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" 
-            --build-arg SECRET_KEY="${{ secrets.SECRET_KEY }}" 
-            -t aryan0011/go-backend:latest 
+      run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \  # Multi-arch support
+            --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            --build-arg SECRET_KEY="${{ secrets.SECRET_KEY }}" \
+            -t aryan0011/go-backend:latest \
+            -t aryan0011/go-backend:${{ github.sha }} \  # Tag with commit SHA
             --push .
