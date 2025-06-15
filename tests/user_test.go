@@ -35,6 +35,7 @@ func Ping(t *testing.T, ge *gin.Engine) {
 }
 
 func TestLoginroute(t *testing.T) {
+	gin.SetMode(gin.ReleaseMode)
 
 	ge := gin.New()
 	Ping(t, ge)

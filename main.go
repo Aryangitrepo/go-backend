@@ -11,7 +11,7 @@ import (
 
 func setupServer() *gin.Engine {
 	// Gin Mode
-	gin.SetMode(gin.DebugMode)
+	gin.SetMode(gin.ReleaseMode)
 	if err := models.Config(); err != nil {
 		log.Fatal(err)
 	}
