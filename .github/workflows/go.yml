@@ -33,9 +33,9 @@ jobs:
 
     - name: Build Docker image with build args
       run: docker build \
-             --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
-             --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
-             -t aryan0011/go-backend:latest .
+         --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
+         --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
+         -t aryan0011/go-backend:latest .
 
     - name: Push Docker image
       run: docker push aryan0011/go-backend:latest
